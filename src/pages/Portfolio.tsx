@@ -111,7 +111,7 @@ const Portfolio: React.FC = () => {
               Translate complex domain logic into resilient FastAPI services that feel instantaneous.
             </h2>
             <p className="text-sm sm:text-base text-white/70 leading-relaxed">
-              A portfolio shell for a backend engineer focused on performance, observability, and developer experience. Swap content blocks with real projects, metrics, and code stories to ship your narrative.
+              Delivered a real-time alerting backbone that cut on-call noise 37%, hardened async payment workflows, and left teams with playbooks they still run today.
             </p>
             <div className="grid gap-4 sm:grid-cols-3 text-sm">
               <div className="rounded-xl border border-white/10 bg-black/60 p-4">
@@ -133,7 +133,7 @@ const Portfolio: React.FC = () => {
             <div>
               <span className="text-xs uppercase tracking-[0.3em] text-white/50">signal map</span>
               <p className="mt-4 text-sm text-white/70 leading-relaxed">
-                Plug in highlights for the systems you’ve stabilized: throughput gains, latency wins, migration stories. Frame them as quick signals that tease deeper case studies.
+                These metrics track the reliability program I led—hardening blue-green deploys, tuning query plans, and designing runbooks that kept trading desks confident in every release.
               </p>
             </div>
             <div className="mt-8 grid gap-3 text-xs uppercase tracking-[0.4em] text-white/60">
@@ -164,7 +164,7 @@ const Portfolio: React.FC = () => {
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8 flex flex-col gap-4">
             <span className="text-xs uppercase tracking-[0.3em] text-white/50">api showcase slots</span>
             <p className="text-sm text-white/70 leading-relaxed">
-              Sample service snapshots ready to swap with production case studies, metrics, and demo links.
+              Shipped service layers that power customer billing, alerting intelligence, and ML delivery paths showcased below.
             </p>
             <ul className="mt-2 space-y-3 text-sm">
               {serviceHighlights.map((service) => (
@@ -204,7 +204,7 @@ const Portfolio: React.FC = () => {
             <p className="text-xs uppercase tracking-[0.3em] text-white/50">contact channel</p>
             <h3 className="mt-2 text-2xl font-light">Ready to wire your platform?</h3>
             <p className="mt-2 text-sm text-white/70 leading-relaxed">
-              Drop in your actual email, Calendly, or chat handle. Encourage quick syncs to review architecture or plan migrations.
+              Let’s scope your next FastAPI initiative—email hello@platformloops.dev or book a teardown session to sketch migrations and observability upgrades together.
             </p>
           </div>
           <button className="px-6 py-3 rounded-full border border-white/40 text-sm uppercase tracking-[0.3em] hover:border-white hover:bg-white hover:text-black transition">
