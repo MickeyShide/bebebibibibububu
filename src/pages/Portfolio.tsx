@@ -62,10 +62,10 @@ const Portfolio: React.FC = () => {
   return (
     <motion.main
       className="relative min-h-[100svh] overflow-hidden bg-black text-white"
-      initial={{ opacity: 0, filter: "blur(8px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -80 }}
-      transition={{ duration: 1.2, ease: "easeInOut" }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
     >
       <div className="absolute inset-0 opacity-40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.08),_transparent_55%)]" />
@@ -80,7 +80,7 @@ const Portfolio: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
-          custom={0.2}
+          custom={0.15}
         >
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-white/60">[ new destination ]</p>
@@ -103,7 +103,7 @@ const Portfolio: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.35 }}
-          custom={0.4}
+          custom={0.3}
         >
           <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 sm:p-10 flex flex-col gap-6">
             <span className="text-xs uppercase tracking-[0.3em] text-white/50">mission brief</span>
@@ -159,7 +159,7 @@ const Portfolio: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.35 }}
-          custom={0.6}
+          custom={0.45}
         >
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8 flex flex-col gap-4">
             <span className="text-xs uppercase tracking-[0.3em] text-white/50">api showcase slots</span>
@@ -198,7 +198,7 @@ const Portfolio: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          custom={0.8}
+          custom={0.6}
         >
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-white/50">contact channel</p>
