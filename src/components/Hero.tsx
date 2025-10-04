@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaPlay } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: number }> = ({
   text,
@@ -51,6 +52,7 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
 };
 
 const Hero: React.FC = () => {
+  const navigate = useNavigate();
   const particles = Array.from({ length: 50 });
   const [warp, setWarp] = useState(false);
   const [redirect, setRedirect] = useState(false);
@@ -63,26 +65,26 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     if (warp) {
-      const t = setTimeout(() => setRedirect(true), 3000);
+      const t = setTimeout(() => setRedirect(true), 2200);
       return () => clearTimeout(t);
     }
   }, [warp]);
 
-  if (redirect) {
-    return (
-      <motion.div
-        className="w-full h-screen flex items-center justify-center bg-black text-white text-4xl"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, ease: "easeInOut" }}
-      >
-        Done!
-      </motion.div>
-    );
-  }
+  useEffect(() => {
+    if (redirect) {
+      const t = setTimeout(() => navigate("/portfolio"), 600);
+      return () => clearTimeout(t);
+    }
+  }, [redirect, navigate]);
 
   return (
-    <div className="relative w-full h-[100svh] overflow-hidden">
+    <motion.div
+      className="relative w-full h-[100svh] overflow-hidden"
+      initial={{ opacity: 0, filter: "blur(12px)" }}
+      animate={{ opacity: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, filter: "blur(16px)" }}
+      transition={{ duration: 1.2, ease: "easeInOut" }}
+    >
       {/* облако частиц */}
       {showParticles && (
         <motion.div
@@ -212,10 +214,19 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <TypewriterText text="Loading..." speed={100} startDelay={1000} />
+          <TypewriterText text="Loading..." speed={100} startDelay={800} />
         </motion.div>
       )}
-    </div>
+
+      {redirect && (
+        <motion.div
+          className="absolute inset-0 bg-black"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.9 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        />
+      )}
+    </motion.div>
   );
 };
 
