@@ -1,12 +1,29 @@
 import React from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Hero from "./components/Hero";
+import Portfolio from "./pages/Portfolio";
+
+const AnimatedRoutes: React.FC = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Hero />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 function App() {
   return (
-    <div className="w-full bg-black text-white">
-  <Hero />
-</div>
-
+    <BrowserRouter>
+      <div className="w-full bg-black text-white min-h-screen">
+        <AnimatedRoutes />
+      </div>
+    </BrowserRouter>
   );
 }
 
