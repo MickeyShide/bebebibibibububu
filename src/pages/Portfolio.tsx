@@ -11,6 +11,53 @@ const sectionVariants = {
   }),
 };
 
+const serviceHighlights = [
+  {
+    id: "alerts-gateway",
+    accent: "bg-emerald-400",
+    title: "alerts gateway",
+    description:
+      "Event-driven router stitching WebSockets, Kafka topics, and push relays for 120K alerts/minute.",
+  },
+  {
+    id: "ledger-api",
+    accent: "bg-sky-400",
+    title: "ledger api",
+    description:
+      "Idempotent transaction writer with audit trails, compliance hooks, and Grafana guardrails.",
+  },
+  {
+    id: "ml-delivery",
+    accent: "bg-fuchsia-400",
+    title: "ml delivery",
+    description:
+      "Hybrid inference plane orchestrating batch and realtime pipelines through Celery and Redis streams.",
+  },
+];
+
+const processTimeline = [
+  {
+    id: "discovery",
+    label: "01 · discovery",
+    description: "Assess requirements, sketch async flows, and shape measurable SLAs.",
+  },
+  {
+    id: "build",
+    label: "02 · build",
+    description: "Ship FastAPI routers, integrate auth layers, and wire persistence services.",
+  },
+  {
+    id: "observe",
+    label: "03 · observe",
+    description: "Instrument tracing, metrics, SLO dashboards, and auto-scaling runbooks.",
+  },
+  {
+    id: "iterate",
+    label: "04 · iterate",
+    description: "Measure, refactor, document, and hand off with clarity and tooling.",
+  },
+];
+
 const Portfolio: React.FC = () => {
   return (
     <motion.main
@@ -31,7 +78,8 @@ const Portfolio: React.FC = () => {
           className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
           variants={sectionVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.4 }}
           custom={0.2}
         >
           <div>
@@ -53,7 +101,8 @@ const Portfolio: React.FC = () => {
           className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]"
           variants={sectionVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.35 }}
           custom={0.4}
         >
           <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 sm:p-10 flex flex-col gap-6">
@@ -108,58 +157,37 @@ const Portfolio: React.FC = () => {
           className="grid gap-8 md:grid-cols-2"
           variants={sectionVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.35 }}
           custom={0.6}
         >
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8 flex flex-col gap-4">
             <span className="text-xs uppercase tracking-[0.3em] text-white/50">api showcase slots</span>
             <p className="text-sm text-white/70 leading-relaxed">
-              Feature three flagship services. Pair each with architecture notes, tech, and a link to your repo or demo.
+              Sample service snapshots ready to swap with production case studies, metrics, and demo links.
             </p>
             <ul className="mt-2 space-y-3 text-sm">
-              <li className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
-                <div>
-                  <p className="uppercase tracking-[0.2em] text-white/60 text-xs">alerts gateway</p>
-                  <p>Event-driven router stitching WebSockets, Kafka, and Push services.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 rounded-full bg-sky-400" />
-                <div>
-                  <p className="uppercase tracking-[0.2em] text-white/60 text-xs">ledger api</p>
-                  <p>Idempotent transaction writer with audit trails &amp; Grafana dashboards.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 rounded-full bg-fuchsia-400" />
-                <div>
-                  <p className="uppercase tracking-[0.2em] text-white/60 text-xs">ml delivery</p>
-                  <p>Batch + realtime inference orchestrated through Celery and Redis streams.</p>
-                </div>
-              </li>
+              {serviceHighlights.map((service) => (
+                <li key={service.id} className="flex items-start gap-3">
+                  <span className={`mt-1 h-2 w-2 rounded-full ${service.accent}`} />
+                  <div>
+                    <p className="uppercase tracking-[0.2em] text-white/60 text-xs">{service.title}</p>
+                    <p>{service.description}</p>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-black/70 p-8 flex flex-col gap-6">
             <span className="text-xs uppercase tracking-[0.3em] text-white/50">workflow timeline</span>
             <div className="space-y-5 text-sm text-white/70">
-              <div className="border-l border-white/20 pl-4">
-                <p className="uppercase tracking-[0.2em] text-xs text-white/50">01 · discovery</p>
-                <p>Assess requirements, sketch async flows, define SLAs.</p>
-              </div>
-              <div className="border-l border-white/20 pl-4">
-                <p className="uppercase tracking-[0.2em] text-xs text-white/50">02 · build</p>
-                <p>Implement FastAPI routers, integrate auth, wire persistence.</p>
-              </div>
-              <div className="border-l border-white/20 pl-4">
-                <p className="uppercase tracking-[0.2em] text-xs text-white/50">03 · observe</p>
-                <p>Instrument tracing, metrics, SLO dashboards, and auto-scaling.</p>
-              </div>
-              <div className="border-l border-white/20 pl-4">
-                <p className="uppercase tracking-[0.2em] text-xs text-white/50">04 · iterate</p>
-                <p>Measure, refactor, document, and share learnings.</p>
-              </div>
+              {processTimeline.map((step) => (
+                <div key={step.id} className="border-l border-white/20 pl-4">
+                  <p className="uppercase tracking-[0.2em] text-xs text-white/50">{step.label}</p>
+                  <p>{step.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </motion.section>
@@ -168,7 +196,8 @@ const Portfolio: React.FC = () => {
           className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-lg p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8"
           variants={sectionVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
           custom={0.8}
         >
           <div>
