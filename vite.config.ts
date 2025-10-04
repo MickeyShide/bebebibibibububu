@@ -7,6 +7,10 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 5173,
     strictPort: true,
-    allowedHosts: ["asdsdasda.ru.tuna.am"], // 👈 разрешённый хост
+    allowedHosts: [
+      "asdsdasda.ru.tuna.am",
+      "asldkmaksldk.ru.tuna.am"
+    ], // 👈 разрешённый хост
+
   },
 });
