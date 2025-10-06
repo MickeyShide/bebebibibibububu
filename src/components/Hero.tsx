@@ -13,8 +13,8 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
   const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    const startTimeout = setTimeout(() => setStarted(true), startDelay);
-    return () => clearTimeout(startTimeout);
+    const t = setTimeout(() => setStarted(true), startDelay);
+    return () => clearTimeout(t);
   }, [startDelay]);
 
   useEffect(() => {
@@ -29,7 +29,6 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
   }, [started, index, text, speed]);
 
   const lines = displayed.split("\n");
-
   return (
     <span className="inline-block text-right leading-6 whitespace-pre-wrap">
       {lines.map((line, i) => (
@@ -79,7 +78,7 @@ const Hero: React.FC = () => {
 
   return (
     <motion.div
-      className="relative w-full h-[100svh] overflow-hidden"
+      className="relative w-full h-[100dvh] overflow-hidden text-white"
       initial={{ opacity: 0, filter: "blur(12px)" }}
       animate={{ opacity: 1, filter: "blur(0px)" }}
       exit={{ opacity: 0, filter: "blur(16px)" }}
@@ -90,11 +89,7 @@ const Hero: React.FC = () => {
         <motion.div
           className="fixed inset-0 pointer-events-none flex items-center justify-center"
           animate={{ rotate: 360 }}
-          transition={{
-            duration: 60, // полный оборот за 60 секунд
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         >
           {particles.map((_, i) => {
             const angle = (i / particles.length) * 2 * Math.PI;
@@ -111,12 +106,7 @@ const Hero: React.FC = () => {
                 initial={{ opacity: 0, scale: 0 }}
                 animate={
                   warp
-                    ? {
-                        x: [x, x * 8],
-                        y: [y, y * 8],
-                        opacity: [1, 0],
-                        scale: [1, 3],
-                      }
+                    ? { x: [x, x * 8], y: [y, y * 8], opacity: [1, 0], scale: [1, 3] }
                     : {
                         x: [x, x + Math.random() * 5 - 2.5, x - Math.random() * 5, x],
                         y: [y, y + Math.random() * 5 - 2.5, y - Math.random() * 5, y],
@@ -137,14 +127,14 @@ const Hero: React.FC = () => {
       )}
 
       {/* контент */}
-      <div className="relative max-w-screen-lg mx-auto h-full">
+      <div className="relative max-w-6xl mx-auto h-full">
         <motion.div
           className="w-full h-full relative"
           animate={warp ? { scale: 3, opacity: 0 } : { scale: 1, opacity: 1 }}
           transition={{ duration: 2, ease: "easeInOut" }}
         >
           <motion.div
-            className="absolute top-10 left-10 text-6xl"
+            className="absolute top-10 left-10 text-6xl pixel-font"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
@@ -153,7 +143,7 @@ const Hero: React.FC = () => {
           </motion.div>
 
           <motion.div
-            className="absolute top-40 right-20 text-2xl tracking-widest underline"
+            className="absolute top-40 right-20 text-2xl tracking-widest underline pixel-font"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
@@ -162,7 +152,7 @@ const Hero: React.FC = () => {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-10 left-10 text-4xl border p-2"
+            className="absolute bottom-10 left-10 text-4xl border p-2 pixel-font"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
@@ -176,11 +166,7 @@ const Hero: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 2 }}
           >
-            <TypewriterText
-              text={`WHY\nNOT\nTAKE\nA\n[ BREAK ]`}
-              speed={100}
-              startDelay={2000}
-            />
+            <TypewriterText text={`WHY\nNOT\nTAKE\nA\n[ BREAK ]`} speed={100} startDelay={2000} />
           </motion.div>
 
           {/* центр */}
@@ -190,41 +176,30 @@ const Hero: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 3, duration: 2 }}
           >
-            <div className="relative flex items-center justify-center">
-              {!warp && (
-                <motion.button
-                  className="w-24 h-24 border-2 border-white rounded-full flex items-center justify-center text-white z-10 hover:bg-white hover:text-black transition-colors duration-300"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setWarp(true)}
-                >
-                  <FaPlay size={32} />
-                </motion.button>
-              )}
-            </div>
+            {!warp && (
+              <motion.button
+                className="w-24 h-24 border-2 border-white rounded-full flex items-center justify-center text-white z-10 hover:bg-white hover:text-black transition-colors duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setWarp(true)}
+              >
+                <FaPlay size={32} />
+              </motion.button>
+            )}
           </motion.div>
         </motion.div>
       </div>
 
-      {/* новый текст во время warp */}
+      {/* warp overlay */}
       {warp && (
         <motion.div
-          className="absolute inset-0 flex items-center justify-center text-white text-4xl"
+          className="absolute inset-0 flex items-center justify-center text-white text-4xl pixel-font"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <TypewriterText text="Loading..." speed={100} startDelay={800} />
         </motion.div>
-      )}
-
-      {redirect && (
-        <motion.div
-          className="absolute inset-0 bg-black"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.9 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-        />
       )}
     </motion.div>
   );

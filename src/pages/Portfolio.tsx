@@ -1,218 +1,244 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FiMail } from "react-icons/fi";
+import { FaTelegramPlane } from "react-icons/fa";
 
-const sectionVariants = {
+const fadeIn = {
   hidden: { opacity: 0, y: 40 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay, duration: 0.8, ease: "easeOut" },
-  }),
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
 
-const serviceHighlights = [
-  {
-    id: "alerts-gateway",
-    accent: "bg-emerald-400",
-    title: "alerts gateway",
-    description:
-      "Event-driven router stitching WebSockets, Kafka topics, and push relays for 120K alerts/minute.",
-  },
-  {
-    id: "ledger-api",
-    accent: "bg-sky-400",
-    title: "ledger api",
-    description:
-      "Idempotent transaction writer with audit trails, compliance hooks, and Grafana guardrails.",
-  },
-  {
-    id: "ml-delivery",
-    accent: "bg-fuchsia-400",
-    title: "ml delivery",
-    description:
-      "Hybrid inference plane orchestrating batch and realtime pipelines through Celery and Redis streams.",
-  },
-];
-
-const processTimeline = [
-  {
-    id: "discovery",
-    label: "01 · discovery",
-    description: "Assess requirements, sketch async flows, and shape measurable SLAs.",
-  },
-  {
-    id: "build",
-    label: "02 · build",
-    description: "Ship FastAPI routers, integrate auth layers, and wire persistence services.",
-  },
-  {
-    id: "observe",
-    label: "03 · observe",
-    description: "Instrument tracing, metrics, SLO dashboards, and auto-scaling runbooks.",
-  },
-  {
-    id: "iterate",
-    label: "04 · iterate",
-    description: "Measure, refactor, document, and hand off with clarity and tooling.",
-  },
-];
+// безопасная загрузка изображения
+const ImageFadeIn: React.FC = () => {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <img
+      src="/imgs/shide.png"
+      alt="background"
+      loading="lazy"
+      onLoad={() => setLoaded(true)}
+      className={`invert max-w-[200px] opacity-50 transition-opacity duration-700 ease-out mx-auto ${
+        loaded ? "opacity-40" : "opacity-0"
+      }`}
+      style={{
+        width: "40%",
+        marginTop: "3rem",
+        filter: "contrast(200%) brightness(220%) grayscale(100%)",
+        willChange: "opacity",
+      }}
+    />
+  );
+};
 
 const Portfolio: React.FC = () => {
+  const navigate = useNavigate();
+
+  const projectCards = [
+    { title: "FLOWERAVE", desc: "Ticketing microservice mesh with QR-stream sync." },
+    { title: "СКАНЫШИ", desc: "Collectible delivery layer using Yandex Maps v3." },
+  ];
+
   return (
-    <motion.main
-      className="relative min-h-[100svh] overflow-hidden bg-black text-white"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -80 }}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
+    <motion.div
+      className="w-full min-h-[100svh] bg-black text-white overflow-x-hidden"
+      style={{
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, sans-serif',
+        willChange: "opacity, transform",
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1, ease: "easeInOut" }}
     >
-      <div className="absolute inset-0 opacity-40">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.08),_transparent_55%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,_rgba(20,20,20,0.9),_rgba(0,0,0,0.6))]" />
-        <div className="absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-gradient-to-b from-transparent via-white/40 to-transparent animate-pulse-bright" />
-      </div>
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-16 sm:py-20 flex flex-col gap-16">
-        <motion.header
-          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-          custom={0.15}
-        >
-          <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-white/60">[ new destination ]</p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light leading-tight">
-              FASTAPI BACKEND<br className="hidden sm:block" />
-              BLUEPRINT
-            </h1>
+      {/* top bar */}
+      <header
+        className="flex h-20 justify-between items-center px-10 py-6 text-xl uppercase text-white/50 pixel-font select-none"
+        style={{ willChange: "opacity, transform" }}
+      >
+        <div className="flex items-center gap-6">
+          <img
+            src="/imgs/shide.png"
+            alt="logo"
+            loading="lazy"
+            className="invert h-10 w-auto contrast-[250%] brightness-[300%] saturate-0 mix-blend-screen transition-opacity duration-700 ease-out"
+          />
+          <div className="flex items-center gap-4">
+            <a
+              href="mailto:MICKEYSHIDE@GMAIL.COM"
+              className="hover:text-white focus-visible:text-white transition"
+              title="Email"
+              aria-label="Email"
+            >
+              <FiMail className="text-2xl" />
+            </a>
+            <a
+              href="https://t.me/platformloops"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white focus-visible:text-white transition"
+              title="Telegram"
+              aria-label="Telegram"
+            >
+              <FaTelegramPlane className="text-2xl" />
+            </a>
           </div>
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 px-4 py-2 border border-white/40 rounded-full text-sm uppercase tracking-[0.3em] hover:border-white hover:bg-white hover:text-black transition"
+        </div>
+
+        <div className="space-x-6 flex items-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="hover:text-white focus-visible:text-white transition"
+            aria-label="Go back"
           >
-            ← back to checkpoint
-          </Link>
-        </motion.header>
-
-        <motion.section
-          className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.35 }}
-          custom={0.3}
-        >
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 sm:p-10 flex flex-col gap-6">
-            <span className="text-xs uppercase tracking-[0.3em] text-white/50">mission brief</span>
-            <h2 className="text-2xl sm:text-3xl font-light leading-snug">
-              Translate complex domain logic into resilient FastAPI services that feel instantaneous.
-            </h2>
-            <p className="text-sm sm:text-base text-white/70 leading-relaxed">
-              Delivered a real-time alerting backbone that cut on-call noise 37%, hardened async payment workflows, and left teams with playbooks they still run today.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-3 text-sm">
-              <div className="rounded-xl border border-white/10 bg-black/60 p-4">
-                <p className="text-white/50 uppercase tracking-[0.2em] text-[11px] mb-1">core stack</p>
-                <p>FastAPI · PostgreSQL · Redis · Celery</p>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-black/60 p-4">
-                <p className="text-white/50 uppercase tracking-[0.2em] text-[11px] mb-1">focus</p>
-                <p>Async APIs, Observability, CI/CD</p>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-black/60 p-4">
-                <p className="text-white/50 uppercase tracking-[0.2em] text-[11px] mb-1">availability</p>
-                <p>Remote · UTC+3 · Open to consulting</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-transparent backdrop-blur-lg p-8 flex flex-col justify-between">
-            <div>
-              <span className="text-xs uppercase tracking-[0.3em] text-white/50">signal map</span>
-              <p className="mt-4 text-sm text-white/70 leading-relaxed">
-                These metrics track the reliability program I led—hardening blue-green deploys, tuning query plans, and designing runbooks that kept trading desks confident in every release.
-              </p>
-            </div>
-            <div className="mt-8 grid gap-3 text-xs uppercase tracking-[0.4em] text-white/60">
-              <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <span>uptime</span>
-                <span className="text-white">99.98%</span>
-              </div>
-              <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <span>p95 latency</span>
-                <span className="text-white">-37%</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>deploy cadence</span>
-                <span className="text-white">daily</span>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-
-        <motion.section
-          className="grid gap-8 md:grid-cols-2"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.35 }}
-          custom={0.45}
-        >
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 flex flex-col gap-4">
-            <span className="text-xs uppercase tracking-[0.3em] text-white/50">api showcase slots</span>
-            <p className="text-sm text-white/70 leading-relaxed">
-              Shipped service layers that power customer billing, alerting intelligence, and ML delivery paths showcased below.
-            </p>
-            <ul className="mt-2 space-y-3 text-sm">
-              {serviceHighlights.map((service) => (
-                <li key={service.id} className="flex items-start gap-3">
-                  <span className={`mt-1 h-2 w-2 rounded-full ${service.accent}`} />
-                  <div>
-                    <p className="uppercase tracking-[0.2em] text-white/60 text-xs">{service.title}</p>
-                    <p>{service.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-black/70 p-8 flex flex-col gap-6">
-            <span className="text-xs uppercase tracking-[0.3em] text-white/50">workflow timeline</span>
-            <div className="space-y-5 text-sm text-white/70">
-              {processTimeline.map((step) => (
-                <div key={step.id} className="border-l border-white/20 pl-4">
-                  <p className="uppercase tracking-[0.2em] text-xs text-white/50">{step.label}</p>
-                  <p>{step.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
-
-        <motion.section
-          className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-lg p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          custom={0.6}
-        >
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-white/50">contact channel</p>
-            <h3 className="mt-2 text-2xl font-light">Ready to wire your platform?</h3>
-            <p className="mt-2 text-sm text-white/70 leading-relaxed">
-              Let’s scope your next FastAPI initiative—email hello@platformloops.dev or book a teardown session to sketch migrations and observability upgrades together.
-            </p>
-          </div>
-          <button className="px-6 py-3 rounded-full border border-white/40 text-sm uppercase tracking-[0.3em] hover:border-white hover:bg-white hover:text-black transition">
-            initiate handshake
+            ← CHECKPOINT
           </button>
-        </motion.section>
-      </div>
-    </motion.main>
+        </div>
+      </header>
+
+      {/* main content */}
+      <main
+        className="flex flex-col items-center text-center px-4 pt-10 pb-20 max-w-6xl mx-auto"
+        style={{ willChange: "opacity, transform" }}
+      >
+        <motion.h1
+          className="text-[clamp(2.8rem,6vw,6rem)] pixel-font leading-[1.1]"
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+        >
+          BACKEND
+          <br />
+          ARCHITECTURE
+        </motion.h1>
+
+        <motion.div
+          className="my-10 h-[1px] w-32 bg-white/30"
+          animate={{ scaleX: [1, 0.6, 1], opacity: [0.3, 0.7, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        <motion.p
+          className="max-w-2xl text-white/70 text-xl leading-relaxed"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.4, duration: 0.8 } }}
+        >
+          FastAPI / PostgreSQL / Redis / Celery
+          <br />
+          pipelines · alerts · metrics · uptime
+        </motion.p>
+
+        {/* карточки проектов */}
+        <motion.div
+          className="mt-16 flex flex-wrap justify-center gap-8 px-6"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: { transition: { staggerChildren: 0.2, delayChildren: 1.1 } },
+          }}
+        >
+          {projectCards.map((card, i) => {
+            const jpg = `/imgs/bg-${i + 1}.jpg`;
+            const png = `/imgs/bg-${i + 1}.png`;
+
+            const [bg, setBg] = useState(jpg);
+
+            useEffect(() => {
+              const img = new Image();
+              img.src = jpg;
+              img.onload = () => setBg(jpg);
+              img.onerror = () => setBg(png);
+            }, [jpg, png]);
+
+            return (
+              <motion.div
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  transition: { type: "spring", stiffness: 150, damping: 12 },
+                }}
+                className="relative w-[260px] h-[260px] rounded-2xl overflow-hidden cursor-pointer group bg-center bg-no-repeat bg-cover will-change-transform"
+                style={{
+                  backgroundImage: `url(${bg})`,
+                  backgroundSize: "115%",
+                }}
+              >
+                <div
+                  className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-700 rounded-2xl"
+                  aria-hidden="true"
+                />
+
+                <div className="z-10 absolute inset-0 flex flex-col justify-end items-center text-center p-4 transition-all duration-500 pointer-events-none">
+                  <motion.h3
+                    className="text-2xl font-medium text-white tracking-wide uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  >
+                    {card.title}
+                  </motion.h3>
+                  <motion.p className="text-white/80 text-sm max-w-[180px] leading-relaxed opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    {card.desc}
+                  </motion.p>
+                </div>
+
+                <div
+                  className="absolute -inset-[1px] bg-gradient-to-t from-black/80 via-black/40 via-50% to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"
+                  aria-hidden="true"
+                />
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </main>
+
+      {/* footer */}
+      <footer className="w-full flex flex-col items-center gap-6 select-none">
+        <motion.button
+          className="px-8 py-3 border border-white/30 rounded-full text-xl uppercase hover:border-white hover:bg-white hover:text-black transition focus-visible:ring-2 focus-visible:ring-white/50"
+          whileHover={{ scale: 1.05 }}
+        >
+          INITIATE HANDSHAKE
+        </motion.button>
+
+        <div className="flex gap-4 text-white/40">
+          <a
+            href="mailto:MICKEYSHIDE@GMAIL.COM"
+            className="hover:text-white focus-visible:text-white transition"
+            title="Email"
+            aria-label="Email"
+          >
+            <FiMail className="text-2xl" />
+          </a>
+          <a
+            href="https://t.me/platformloops"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white focus-visible:text-white transition"
+            title="Telegram"
+            aria-label="Telegram"
+          >
+            <FaTelegramPlane className="text-2xl" />
+          </a>
+        </div>
+
+        <p className="text-base uppercase tracking-[0.3em] text-white/40">
+          MICKEYSHIDE@GMAIL.COM
+        </p>
+
+        <div className="w-full border-t py-4 border-white/10 px-10 flex flex-wrap justify-between text-sm text-white/50 tracking-wide">
+          <p>
+            STATUS: <span className="text-emerald-400">STABLE</span>
+          </p>
+          <p>
+            LATENCY <span className="text-white/40">8.2ms</span>
+          </p>
+          <p>BUILD V3.11</p>
+        </div>
+      </footer>
+    </motion.div>
   );
 };
 

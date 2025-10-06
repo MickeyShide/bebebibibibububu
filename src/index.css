@@ -2,13 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+/* базовый маковский шрифт по умолчанию */
 body {
-  font-family: 'VT323', monospace;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
   background: black;
   color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* пиксельный шрифт */
+.pixel-font {
+  font-family: 'VT323', monospace !important;
+  letter-spacing: 0.03em;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+}
 
+/* ✅ нормальный, стабильный скролл */
+html,
+body {
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* анимации */
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
@@ -18,11 +44,12 @@ body {
   }
 }
 .animate-spin-slow {
-  animation: spin-slow 25s linear infinite;
+  animation: spin-slow 60s linear infinite;
 }
 
 @keyframes pulse-bright {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.9;
   }
@@ -35,14 +62,15 @@ body {
   animation: pulse-bright 3s ease-in-out infinite;
 }
 
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/* ✅ динамическая высота для Safari */
+:root {
+  --vh: 100%;
 }
-.animate-spin-slow {
-  animation: spin-slow 60s linear infinite; /* очень медленное вращение */
+
+/* при загрузке и ресайзе пересчитываем vh */
+@supports (-webkit-touch-callout: none) {
+  body {
+    height: calc(var(--vh, 1vh) * 100);
+  }
 }

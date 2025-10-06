@@ -7,6 +7,17 @@ module.exports = {
         primary: "#ffffff",
         accent: "#6366f1",
       },
+      fontFamily: {
+      sans: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"SF Pro Display"',
+        'Inter',
+        '"Segoe UI"',
+        'Roboto',
+        'sans-serif',
+      ],
+    },
     },
   },
   plugins: [],

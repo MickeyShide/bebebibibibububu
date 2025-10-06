@@ -20,7 +20,7 @@ const AnimatedRoutes: React.FC = () => {
 function App() {
   return (
     <BrowserRouter>
-      <div className="w-full bg-black text-white min-h-screen">
+      <div className="w-full bg-black text-white">
         <AnimatedRoutes />
       </div>
     </BrowserRouter>
