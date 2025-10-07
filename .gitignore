@@ -4683,3 +4683,5 @@ node_modules/react-router-dom/dist/umd/react-router-dom.development.js.map
 node_modules/react-router-dom/dist/umd/react-router-dom.production.min.js
 node_modules/react-router-dom/dist/umd/react-router-dom.production.min.js.map
 index.html
+node_modules/
+dist/
