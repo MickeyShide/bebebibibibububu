@@ -43,6 +43,28 @@ const fadeIn = {
   }),
 };
 
+const gridReveal = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.15, duration: 0.5, ease: easeSoft },
+  },
+};
+
+const cardReveal = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (offset: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.18 + offset,
+      duration: 0.45,
+      ease: easeSoft,
+    },
+  }),
+};
+
 type ProjectCardProps = {
   project: Project;
   index: number;
@@ -62,17 +84,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   return (
     <MotionLink
       to={`/projects/${project.slug}`}
-      variants={fadeIn}
+      variants={cardReveal}
       initial="hidden"
-      animate="visible"
-      custom={0.2 + index * 0.08}
-      className="flex w-full max-w-[240px] flex-col items-center justify-center rounded-sm py-2 transition-colors hover:border-white/30"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.6 }}
+      custom={index * 0.08}
+      className="flex w-full max-w-[240px] flex-col items-center justify-center rounded-sm border border-transparent py-2 transition-colors hover:border-white/30"
       whileHover={{ scale: 1.03 }}
     >
       {!isBroken && (
         <img
           src={imgSrc}
           alt={project.title}
+          loading="lazy"
           className="w-4/5 mb-4 select-none opacity-90"
           onError={() => {
             if (imgSrc !== fallbackImage) {
@@ -95,7 +119,8 @@ const Portfolio: React.FC = () => {
       <motion.h1
         variants={fadeIn}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.8 }}
         custom={0.25}
         className="mb-4 text-[clamp(2rem,6vw,4rem)] uppercase tracking-tight text-white/90 pixel-font"
       >
@@ -105,7 +130,8 @@ const Portfolio: React.FC = () => {
       <motion.div
         variants={fadeIn}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
         custom={0.35}
         className="mb-16 flex flex-col items-center text-center text-[0.75rem] tracking-[0.15em] text-white/70"
       >
@@ -127,11 +153,17 @@ const Portfolio: React.FC = () => {
         </span>
       </motion.div>
 
-      <div className="grid grid-cols-1 justify-items-center gap-8 sm:grid-cols-2 md:grid-cols-3">
+      <motion.div
+        variants={gridReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        className="grid grid-cols-1 justify-items-center gap-8 sm:grid-cols-2 md:grid-cols-3"
+      >
         {projects.map((project, index) => (
           <ProjectCard key={project.slug} project={project} index={index} />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
