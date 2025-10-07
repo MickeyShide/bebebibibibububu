@@ -1,24 +1,70 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FiMail } from "react-icons/fi";
 import { FaTelegramPlane } from "react-icons/fa";
 
-const Portfolio: React.FC = () => {
-  const projects = [
-    { title: "FLOWERAVE", desc: "microservice mesh // qr-sync" },
-    { title: "СКАНЫШИ", desc: "collectible map layer // yandex maps" },
-    { title: "OTHER SHIT", desc: "Diverse side projects" },
-  ];
+type Project = {
+  title: string;
+  desc: string;
+  slug: string;
+};
 
-  // единые анимационные пресеты
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (delay = 0) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay, duration: 0.6, ease: "easeOut" },
-    }),
-  };
+const projects: Project[] = [
+  { title: "FLOWERAVE", desc: "microservice mesh // qr-sync", slug: "flowerave" },
+  { title: "СКАНЫШИ", desc: "collectible map layer // yandex maps", slug: "skanyshi" },
+  { title: "COREAPI", desc: "orchestration core // fintech platform", slug: "coreapi" },
+];
+
+const MotionLink = motion(Link);
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay, duration: 0.6, ease: "easeOut" },
+  }),
+};
+
+type ProjectCardProps = {
+  project: Project;
+  index: number;
+};
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
+  const [imgSrc, setImgSrc] = React.useState(`/imgs/bg-${index + 1}.jpg`);
+  const [imgError, setImgError] = React.useState(false);
+
+  return (
+    <MotionLink
+      to={`/projects/${project.slug}`}
+      variants={fadeIn}
+      custom={index * 0.3 + 1.4}
+      className="py-2 rounded-sm w-full max-w-[240px] flex flex-col justify-center items-center hover:border-white/40 transition-colors"
+      whileHover={{ scale: 1.03 }}
+    >
+      {!imgError && (
+        <img
+          src={imgSrc}
+          alt={project.title}
+          className="w-4/5 mb-4 select-none opacity-90"
+          onError={() => {
+            if (imgSrc.endsWith(".jpg")) {
+              setImgSrc(`/imgs/bg-${index + 1}.png`);
+            } else {
+              setImgError(true);
+            }
+          }}
+        />
+      )}
+      <h3 className="text-white text-sm uppercase">{project.title}</h3>
+      <p className="text-white/40 text-[0.65rem] uppercase text-center px-2">{project.desc}</p>
+    </MotionLink>
+  );
+};
+
+const Portfolio: React.FC = () => {
 
   const container = {
     hidden: { opacity: 0 },
@@ -114,39 +160,9 @@ const Portfolio: React.FC = () => {
           animate="visible"
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center"
         >
-          {projects.map((p, i) => {
-            const [imgSrc, setImgSrc] = React.useState(`/imgs/bg-${i + 1}.jpg`);
-            const [imgError, setImgError] = React.useState(false);
-
-            return (
-              <motion.div
-                key={i}
-                variants={fadeIn}
-                custom={i * 0.3 + 1.4}
-                className="py-2 rounded-sm w-full max-w-[240px] flex flex-col justify-center items-center hover:border-white/40 transition-colors"
-                whileHover={{ scale: 1.03 }}
-              >
-                {!imgError && (
-                  <img
-                    src={imgSrc}
-                    alt={p.title}
-                    className="w-4/5 mb-4 select-none opacity-90"
-                    onError={() => {
-                      if (imgSrc.endsWith(".jpg")) {
-                        setImgSrc(`/imgs/bg-${i + 1}.png`);
-                      } else {
-                        setImgError(true);
-                      }
-                    }}
-                  />
-                )}
-                <h3 className="text-white text-sm uppercase">{p.title}</h3>
-                <p className="text-white/40 text-[0.65rem] uppercase text-center px-2">
-                  {p.desc}
-                </p>
-              </motion.div>
-            );
-          })}
+          {projects.map((project, index) => (
+            <ProjectCard key={project.slug} project={project} index={index} />
+          ))}
         </motion.div>
 
         <motion.p
