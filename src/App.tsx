@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Hero from "./components/Hero";
 import Portfolio from "./pages/Portfolio";
+import ProjectDetail from "./pages/ProjectDetail";
 
 const AnimatedRoutes: React.FC = () => {
   const location = useLocation();
@@ -12,6 +13,7 @@ const AnimatedRoutes: React.FC = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Hero />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/projects/:id" element={<ProjectDetail />} />
       </Routes>
     </AnimatePresence>
   );
