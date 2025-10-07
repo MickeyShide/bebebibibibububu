@@ -1,8 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FiMail } from "react-icons/fi";
-import { FaTelegramPlane } from "react-icons/fa";
 
 type Project = {
   title: string;
@@ -45,7 +43,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       initial="hidden"
       animate="visible"
       custom={0.2 + index * 0.08}
-      className="py-2 rounded-sm w-full max-w-[240px] flex flex-col justify-center items-center hover:border-white/30 transition-colors"
+      className="flex w-full max-w-[240px] flex-col items-center justify-center rounded-sm py-2 transition-colors hover:border-white/30"
       whileHover={{ scale: 1.03 }}
     >
       {!imgError && (
@@ -69,101 +67,59 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
 };
 
 const Portfolio: React.FC = () => {
-
   return (
-    <motion.div
-      className="px-6 min-h-[100dvh] bg-black text-white font-mono flex flex-col items-center justify-start py-6 overflow-hidden"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: easeSoft }}
-    >
-      {/* header */}
-      <motion.header
+    <div className="flex w-full flex-1 flex-col items-center text-center">
+      <motion.h1
         variants={fadeIn}
         initial="hidden"
         animate="visible"
-        custom={0.15}
-        className="w-full max-w-6xl flex flex-col sm:flex-row justify-between items-center text-[0.7rem] text-white/50 uppercase tracking-[0.2em] mb-10 gap-4"
+        custom={0.25}
+        className="mb-4 text-[clamp(2rem,6vw,4rem)] uppercase tracking-tight text-white/90 pixel-font"
       >
-        <img
-          src="/imgs/shide.png"
-          alt="logo"
-          loading="lazy"
-          className="invert h-10 w-auto contrast-[250%] brightness-[300%] saturate-0 mix-blend-screen transition-opacity duration-700 ease-out"
-        />
-        <div className="flex gap-4 text-[0.6rem]">
-          <a href="mailto:MICKEYSHIDE@GMAIL.COM" className="flex flex-row gap-2 hover:text-white transition">
-            <FiMail size={16} />
-            <span className="hidden sm:block">mickeyshide@gmail.com</span>
-          </a>
-          <a
-            href="https://t.me/mickeyshide"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-row gap-2 hover:text-white transition"
-          >
-            <FaTelegramPlane size={16} />
-            <span className="hidden sm:block">mickeyshide</span>
-          </a>
-        </div>
-      </motion.header>
+        python backend developer
+      </motion.h1>
 
-      {/* main */}
-      <main className="text-center w-full max-w-6xl flex flex-col items-center">
-        <motion.h1
-          variants={fadeIn}
-          initial="hidden"
-          animate="visible"
-          custom={0.25}
-          className="text-[clamp(2rem,6vw,4rem)] uppercase tracking-tight text-white/90 pixel-font mb-4"
-        >
-          python backend developer
-        </motion.h1>
-
-        {/* profile */}
-        <motion.div
-          variants={fadeIn}
-          initial="hidden"
-          animate="visible"
-          custom={0.35}
-          className="flex flex-col items-center text-center text-white/70 text-[0.75rem] tracking-[0.15em] mb-16"
-        >
-          <div className="flex flex-row gap-2">
-            <motion.img
-              src="/imgs/profile.png"
-              alt="profile"
-              className="w-24 h-24 rounded-sm object-cover invert contrast-[180%] brightness-[220%] saturate-0 mix-blend-screen"
-            />
-            <div className="flex flex-col justify-center text-start">
-              <span className="text-white/90 pixel-font text-[1rem]">Nikita</span>
-              <span className="text-white/90 pixel-font text-[1rem]">23yo</span>
-              <span className="text-white/90 pixel-font text-[1rem]">Moscow, RU</span>
-            </div>
+      <motion.div
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+        custom={0.35}
+        className="mb-16 flex flex-col items-center text-center text-[0.75rem] tracking-[0.15em] text-white/70"
+      >
+        <div className="flex flex-row gap-2">
+          <motion.img
+            src="/imgs/profile.png"
+            alt="profile"
+            className="h-24 w-24 rounded-sm object-cover invert contrast-[180%] brightness-[220%] saturate-0 mix-blend-screen"
+          />
+          <div className="flex flex-col justify-center text-start">
+            <span className="pixel-font text-[1rem] text-white/90">Nikita</span>
+            <span className="pixel-font text-[1rem] text-white/90">23yo</span>
+            <span className="pixel-font text-[1rem] text-white/90">Moscow, RU</span>
           </div>
-          <span className="text-white/40 mt-2 px-4">
-            fastapi / sqlalchemy /
-            postgresql / redis / docker / pytest / celery
-          </span>
-        </motion.div>
-
-        {/* projects */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.slug} project={project} index={index} />
-          ))}
         </div>
+        <span className="mt-2 px-4 text-white/40">
+          fastapi / sqlalchemy /
+          postgresql / redis / docker / pytest / celery
+        </span>
+      </motion.div>
 
-        <motion.p
-          variants={fadeIn}
-          initial="hidden"
-          animate="visible"
-          custom={0.55}
-          className="text-[0.7rem] text-white/30 tracking-[0.25em] uppercase pt-20"
-        >
-          Updated: 07.10.2025
-        </motion.p>
-      </main>
-    </motion.div>
+      <div className="grid grid-cols-1 justify-items-center gap-8 sm:grid-cols-2 md:grid-cols-3">
+        {projects.map((project, index) => (
+          <ProjectCard key={project.slug} project={project} index={index} />
+        ))}
+      </div>
+
+      <motion.p
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+        custom={0.55}
+        className="pt-20 text-[0.7rem] uppercase tracking-[0.25em] text-white/30"
+      >
+        Updated: 07.10.2025
+      </motion.p>
+    </div>
   );
 };
 
