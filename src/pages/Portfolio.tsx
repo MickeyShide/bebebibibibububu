@@ -6,12 +6,28 @@ type Project = {
   title: string;
   desc: string;
   slug: string;
+  image: string;
 };
 
 const projects: Project[] = [
-  { title: "FLOWERAVE", desc: "microservice mesh // qr-sync", slug: "flowerave" },
-  { title: "СКАНЫШИ", desc: "collectible map layer // yandex maps", slug: "skanyshi" },
-  { title: "COREAPI", desc: "orchestration core // fintech platform", slug: "coreapi" },
+  {
+    title: "FLOWERAVE",
+    desc: "microservice mesh // qr-sync",
+    slug: "flowerave",
+    image: "/imgs/bg-1.jpg",
+  },
+  {
+    title: "СКАНЫШИ",
+    desc: "collectible map layer // yandex maps",
+    slug: "skanyshi",
+    image: "/imgs/bg-2.png",
+  },
+  {
+    title: "COREAPI",
+    desc: "orchestration core // fintech platform",
+    slug: "coreapi",
+    image: "/imgs/shide.png",
+  },
 ];
 
 const MotionLink = motion(Link);
@@ -32,9 +48,16 @@ type ProjectCardProps = {
   index: number;
 };
 
+const fallbackImage = "/imgs/profile.png";
+
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
-  const [imgSrc, setImgSrc] = React.useState(`/imgs/bg-${index + 1}.jpg`);
-  const [imgError, setImgError] = React.useState(false);
+  const [imgSrc, setImgSrc] = React.useState(project.image);
+  const [isBroken, setIsBroken] = React.useState(false);
+
+  React.useEffect(() => {
+    setImgSrc(project.image);
+    setIsBroken(false);
+  }, [project.image]);
 
   return (
     <MotionLink
@@ -46,16 +69,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       className="flex w-full max-w-[240px] flex-col items-center justify-center rounded-sm py-2 transition-colors hover:border-white/30"
       whileHover={{ scale: 1.03 }}
     >
-      {!imgError && (
+      {!isBroken && (
         <img
           src={imgSrc}
           alt={project.title}
           className="w-4/5 mb-4 select-none opacity-90"
           onError={() => {
-            if (imgSrc.endsWith(".jpg")) {
-              setImgSrc(`/imgs/bg-${index + 1}.png`);
+            if (imgSrc !== fallbackImage) {
+              setImgSrc(fallbackImage);
             } else {
-              setImgError(true);
+              setIsBroken(true);
             }
           }}
         />
