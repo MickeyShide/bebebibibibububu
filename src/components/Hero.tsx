@@ -54,7 +54,6 @@ const Hero: React.FC = () => {
   const navigate = useNavigate();
   const particles = Array.from({ length: 50 });
   const [warp, setWarp] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
 
   useEffect(() => {
@@ -62,29 +61,36 @@ const Hero: React.FC = () => {
     return () => clearTimeout(t);
   }, []);
 
+  // запускаем переход: fade + навигация с overlap
   useEffect(() => {
-    if (warp) {
-      const t = setTimeout(() => setRedirect(true), 2200);
-      return () => clearTimeout(t);
-    }
-  }, [warp]);
+    if (!warp) return;
 
-  useEffect(() => {
-    if (redirect) {
-      const t = setTimeout(() => navigate("/portfolio"), 600);
-      return () => clearTimeout(t);
-    }
-  }, [redirect, navigate]);
+    // сначала запускаем fade-out
+    const fadeTimer = setTimeout(() => {
+      document.body.classList.add("fade-to-black");
+    }, 800);
+
+    // потом навигация (через 600мс после начала фейда)
+    const navTimer = setTimeout(() => {
+      navigate("/portfolio"); // без replace — чтобы "назад" работало стабильно
+      document.body.classList.remove("fade-to-black");
+    }, 800);
+
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(navTimer);
+    };
+  }, [warp, navigate]);
 
   return (
     <motion.div
-      className="relative w-full h-[100dvh] overflow-hidden text-white"
-      initial={{ opacity: 0, filter: "blur(12px)" }}
+      className="relative w-full h-[100dvh] overflow-hidden text-white bg-black"
+      initial={{ opacity: 0, filter: "blur(10px)" }}
       animate={{ opacity: 1, filter: "blur(0px)" }}
-      exit={{ opacity: 0, filter: "blur(16px)" }}
+      exit={{ opacity: 0, filter: "blur(12px)" }}
       transition={{ duration: 1.2, ease: "easeInOut" }}
     >
-      {/* облако частиц */}
+      {/* particles */}
       {showParticles && (
         <motion.div
           className="fixed inset-0 pointer-events-none flex items-center justify-center"
@@ -108,14 +114,14 @@ const Hero: React.FC = () => {
                   warp
                     ? { x: [x, x * 8], y: [y, y * 8], opacity: [1, 0], scale: [1, 3] }
                     : {
-                        x: [x, x + Math.random() * 5 - 2.5, x - Math.random() * 5, x],
-                        y: [y, y + Math.random() * 5 - 2.5, y - Math.random() * 5, y],
-                        opacity: [0, 0.5, 0.8, 0.4],
-                        scale: [0.8, 1.2, 1],
+                        x: [x, x + Math.random() * 5 - 2.5, x],
+                        y: [y, y + Math.random() * 5 - 2.5, y],
+                        opacity: [0, 0.8, 0.4],
+                        scale: [0.8, 1, 1.1],
                       }
                 }
                 transition={{
-                  duration: warp ? 2 : 4 + Math.random() * 2,
+                  duration: warp ? 1.5 : 4 + Math.random() * 2,
                   repeat: warp ? 0 : Infinity,
                   repeatType: "mirror",
                   ease: "easeInOut",
@@ -126,11 +132,11 @@ const Hero: React.FC = () => {
         </motion.div>
       )}
 
-      {/* контент */}
+      {/* текст и кнопка */}
       <div className="relative max-w-6xl mx-auto h-full">
         <motion.div
           className="w-full h-full relative"
-          animate={warp ? { scale: 3, opacity: 0 } : { scale: 1, opacity: 1 }}
+          animate={warp ? { scale: 2.2, opacity: 0 } : { scale: 1, opacity: 1 }}
           transition={{ duration: 2, ease: "easeInOut" }}
         >
           <motion.div
@@ -169,7 +175,6 @@ const Hero: React.FC = () => {
             <TypewriterText text={`WHY\nNOT\nTAKE\nA\n[ BREAK ]`} speed={100} startDelay={2000} />
           </motion.div>
 
-          {/* центр */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center"
             initial={{ opacity: 0 }}
@@ -190,16 +195,14 @@ const Hero: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* warp overlay */}
+      {/* локальный fade для overlap */}
       {warp && (
         <motion.div
-          className="absolute inset-0 flex items-center justify-center text-white text-4xl pixel-font"
+          className="absolute inset-0 bg-black pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <TypewriterText text="Loading..." speed={100} startDelay={800} />
-        </motion.div>
+        />
       )}
     </motion.div>
   );
