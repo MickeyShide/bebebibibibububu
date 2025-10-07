@@ -1,7 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FiMail } from "react-icons/fi";
-import { FaTelegramPlane } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 type ProjectContent = {
@@ -71,130 +69,93 @@ const ProjectDetail: React.FC = () => {
   }, []);
 
   return (
-    <motion.div
-      className="px-6 min-h-[100dvh] bg-black text-white font-mono flex flex-col items-center justify-start py-6 overflow-hidden"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: easeSoft }}
-    >
-      <motion.header
+    <div className="flex w-full flex-1 flex-col items-center gap-16 text-center">
+      <motion.section
         variants={fadeIn}
         initial="hidden"
         animate="visible"
-        custom={0.12}
-        className="w-full max-w-6xl flex flex-col sm:flex-row justify-between items-center text-[0.7rem] text-white/50 uppercase tracking-[0.2em] mb-10 gap-4"
+        custom={0.9}
+        className="flex flex-col items-center gap-6"
       >
-        <img
-          src="/imgs/shide.png"
-          alt="logo"
-          loading="lazy"
-          className="invert h-10 w-auto contrast-[250%] brightness-[300%] saturate-0 mix-blend-screen transition-opacity duration-700 ease-out"
-        />
-        <div className="flex gap-4 text-[0.6rem]">
-          <a href="mailto:MICKEYSHIDE@GMAIL.COM" className="flex flex-row gap-2 hover:text-white transition">
-            <FiMail size={16} />
-            <span className="hidden sm:block">mickeyshide@gmail.com</span>
-          </a>
-          <a
-            href="https://t.me/mickeyshide"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-row gap-2 hover:text-white transition"
-          >
-            <FaTelegramPlane size={16} />
-            <span className="hidden sm:block">mickeyshide</span>
-          </a>
-        </div>
-      </motion.header>
-
-      <main className="text-center w-full max-w-6xl flex flex-col items-center gap-16">
-        <motion.section
-          variants={fadeIn}
-          initial="hidden"
-          animate="visible"
-          custom={0.9}
-          className="flex flex-col items-center gap-6"
+        <motion.h1
+          className="text-[clamp(2.5rem,7vw,5rem)] uppercase tracking-tight text-white/90 pixel-font"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.22, duration: 0.45, ease: easeSoft }}
         >
-          <motion.h1
-            className="text-[clamp(2.5rem,7vw,5rem)] uppercase tracking-tight text-white/90 pixel-font"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.22, duration: 0.45, ease: easeSoft }}
-          >
-            {project.title}
-          </motion.h1>
-          <p className="text-white/60 text-sm sm:text-base leading-relaxed max-w-2xl">
-            {project.description}
-          </p>
-          <div className="flex flex-wrap justify-center gap-3 text-[0.65rem] sm:text-xs tracking-[0.25em] text-white/50 uppercase">
-            {project.technologies.map((tech, techIndex) => (
-              <motion.span
-                key={tech}
-                variants={fadeIn}
-                initial="hidden"
-                animate="visible"
-                custom={0.3 + techIndex * 0.05}
-                className="px-3 py-1 border border-white/10 bg-white/5 backdrop-blur-sm"
-              >
-                {tech}
-              </motion.span>
-            ))}
-          </div>
-        </motion.section>
-
-        <motion.section
-          variants={fadeIn}
-          initial="hidden"
-          animate="visible"
-          custom={0.35}
-          className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {project.gallery.map((src, index) => {
-            const isLoaded = loadedImages[src];
-            return (
-              <motion.div
-                key={src}
-                className="relative overflow-hidden rounded-sm border border-white/5 bg-white/5"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + index * 0.1, duration: 0.45, ease: easeSoft }}
-                whileHover={{ y: -8, scale: 1.01 }}
-              >
-                <motion.img
-                  src={src}
-                  alt={`${project.title} preview ${index + 1}`}
-                  className={`w-full h-full object-cover select-none transition-all duration-700 ease-out ${
-                    isLoaded ? "blur-0 opacity-100" : "blur-md opacity-0"
-                  }`}
-                  onLoad={() => markLoaded(src)}
-                />
-                {!isLoaded && (
-                  <div className="absolute inset-0 bg-white/5 animate-pulse" aria-hidden />
-                )}
-              </motion.div>
-            );
-          })}
-        </motion.section>
-
-        <motion.div
-          variants={fadeIn}
-          initial="hidden"
-          animate="visible"
-          custom={0.5}
-          className="w-full flex justify-center"
-        >
-          <Link
-            to="/portfolio"
-            className="flex items-center gap-2 text-white/60 hover:text-white transition text-sm uppercase tracking-[0.2em]"
-          >
-            <motion.span whileHover={{ x: -4 }} className="text-lg">
-              ←
+          {project.title}
+        </motion.h1>
+        <p className="max-w-2xl text-sm leading-relaxed text-white/60 sm:text-base">
+          {project.description}
+        </p>
+        <div className="flex flex-wrap justify-center gap-3 text-[0.65rem] uppercase tracking-[0.25em] text-white/50 sm:text-xs">
+          {project.technologies.map((tech, techIndex) => (
+            <motion.span
+              key={tech}
+              variants={fadeIn}
+              initial="hidden"
+              animate="visible"
+              custom={0.3 + techIndex * 0.05}
+              className="border border-white/10 bg-white/5 px-3 py-1 backdrop-blur-sm"
+            >
+              {tech}
             </motion.span>
-            <span>back to portfolio</span>
-          </Link>
-        </motion.div>
-      </main>
-    </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+        custom={0.35}
+        className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {project.gallery.map((src, index) => {
+          const isLoaded = loadedImages[src];
+          return (
+            <motion.div
+              key={src}
+              className="relative overflow-hidden rounded-sm border border-white/5 bg-white/5"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + index * 0.1, duration: 0.45, ease: easeSoft }}
+              whileHover={{ y: -8, scale: 1.01 }}
+            >
+              <motion.img
+                src={src}
+                alt={`${project.title} preview ${index + 1}`}
+                className={`h-full w-full select-none object-cover transition-all duration-700 ease-out ${
+                  isLoaded ? "blur-0 opacity-100" : "blur-md opacity-0"
+                }`}
+                onLoad={() => markLoaded(src)}
+              />
+              {!isLoaded && (
+                <div className="absolute inset-0 animate-pulse bg-white/5" aria-hidden />
+              )}
+            </motion.div>
+          );
+        })}
+      </motion.section>
+
+      <motion.div
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+        custom={0.5}
+        className="flex w-full justify-center"
+      >
+        <Link
+          to="/portfolio"
+          className="flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/60 transition hover:text-white"
+        >
+          <motion.span whileHover={{ x: -4 }} className="text-lg">
+            ←
+          </motion.span>
+          <span>back to portfolio</span>
+        </Link>
+      </motion.div>
+    </div>
   );
 };
 
