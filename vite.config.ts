@@ -9,7 +9,8 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: [
       "asdsdasda.ru.tuna.am",
-      "asldkmaksldk.ru.tuna.am"
+      "asldkmaksldk.ru.tuna.am",
+      "shide.pw"
     ], // 👈 разрешённый хост
 
   },

@@ -119,7 +119,7 @@ const ProjectDetail: React.FC = () => {
               className="relative overflow-hidden rounded-sm border border-white/5 bg-white/5"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + index * 0.1, duration: 0.45, ease: easeSoft }}
+              transition={{ delay: 0.4 + index * 0.1, duration: 0.25, ease: easeSoft }}
               whileHover={{ y: -8, scale: 1.01 }}
             >
               <motion.img
