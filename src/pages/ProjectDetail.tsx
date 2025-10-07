@@ -42,12 +42,14 @@ const projectData: Record<string, ProjectContent> = {
   },
 };
 
+const easeSoft = [0.4, 0, 0.2, 1] as const;
+
 const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { delay, duration: 0.6, ease: "easeOut" },
+    transition: { delay, duration: 0.45, ease: easeSoft },
   }),
 };
 
@@ -71,16 +73,15 @@ const ProjectDetail: React.FC = () => {
   return (
     <motion.div
       className="px-6 min-h-[100dvh] bg-black text-white font-mono flex flex-col items-center justify-start py-6 overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1.2, ease: "easeInOut" }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: easeSoft }}
     >
       <motion.header
         variants={fadeIn}
         initial="hidden"
         animate="visible"
-        custom={0.6}
+        custom={0.12}
         className="w-full max-w-6xl flex flex-col sm:flex-row justify-between items-center text-[0.7rem] text-white/50 uppercase tracking-[0.2em] mb-10 gap-4"
       >
         <img
@@ -116,9 +117,9 @@ const ProjectDetail: React.FC = () => {
         >
           <motion.h1
             className="text-[clamp(2.5rem,7vw,5rem)] uppercase tracking-tight text-white/90 pixel-font"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.7, ease: "easeOut" }}
+            transition={{ delay: 0.22, duration: 0.45, ease: easeSoft }}
           >
             {project.title}
           </motion.h1>
@@ -132,7 +133,7 @@ const ProjectDetail: React.FC = () => {
                 variants={fadeIn}
                 initial="hidden"
                 animate="visible"
-                custom={1.1 + techIndex * 0.1}
+                custom={0.3 + techIndex * 0.05}
                 className="px-3 py-1 border border-white/10 bg-white/5 backdrop-blur-sm"
               >
                 {tech}
@@ -145,7 +146,7 @@ const ProjectDetail: React.FC = () => {
           variants={fadeIn}
           initial="hidden"
           animate="visible"
-          custom={1.3}
+          custom={0.35}
           className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {project.gallery.map((src, index) => {
@@ -156,7 +157,7 @@ const ProjectDetail: React.FC = () => {
                 className="relative overflow-hidden rounded-sm border border-white/5 bg-white/5"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.4 + index * 0.2, duration: 0.6, ease: "easeOut" }}
+                transition={{ delay: 0.4 + index * 0.1, duration: 0.45, ease: easeSoft }}
                 whileHover={{ y: -8, scale: 1.01 }}
               >
                 <motion.img
@@ -179,7 +180,7 @@ const ProjectDetail: React.FC = () => {
           variants={fadeIn}
           initial="hidden"
           animate="visible"
-          custom={1.6}
+          custom={0.5}
           className="w-full flex justify-center"
         >
           <Link
