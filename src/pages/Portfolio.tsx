@@ -109,16 +109,6 @@ const Portfolio: React.FC = () => {
           <ProjectCard key={project.slug} project={project} index={index} />
         ))}
       </div>
-
-      <motion.p
-        variants={fadeIn}
-        initial="hidden"
-        animate="visible"
-        custom={0.55}
-        className="pt-20 text-[0.7rem] uppercase tracking-[0.25em] text-white/30"
-      >
-        Updated: 07.10.2025
-      </motion.p>
     </div>
   );
 };

@@ -11,7 +11,7 @@ const Header: React.FC = () => {
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: easeSoft, delay: 0.1 }}
-      className="w-full border-b border-white/10 bg-black/60 backdrop-blur-sm"
+      className="w-full bg-black/60 backdrop-blur-sm"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-6 py-6 text-[0.7rem] uppercase tracking-[0.2em] text-white/50 sm:flex-row">
         <img
