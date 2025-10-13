@@ -1,17 +1,17 @@
-import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { memo } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer";
 
-const easeSoft = [0.4, 0, 0.2, 1] as const;
+import { SiteFooter } from "@/shared/components/footer";
+import { SiteHeader } from "@/shared/components/navigation";
+import { easeSoft } from "@/shared/config/motion";
 
-const PageLayout: React.FC = () => {
+const PageLayoutComponent = () => {
   const location = useLocation();
 
   return (
     <div className="flex min-h-[100dvh] flex-col bg-black text-white">
-      <Header />
+      <SiteHeader />
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
@@ -26,9 +26,9 @@ const PageLayout: React.FC = () => {
           </div>
         </motion.main>
       </AnimatePresence>
-      <Footer />
+      <SiteFooter />
     </div>
   );
 };
 
-export default PageLayout;
+export const PageLayout = memo(PageLayoutComponent);

@@ -1,10 +1,12 @@
-import React from "react";
 import { motion } from "framer-motion";
+import { memo, useMemo } from "react";
 
-const easeSoft = [0.4, 0, 0.2, 1] as const;
+import { easeSoft } from "@/shared/config/motion";
 
-const Footer: React.FC = () => {
-  const year = new Date().getFullYear();
+const LAST_UPDATE = "07.10.2025";
+
+const SiteFooterComponent = () => {
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
 
   return (
     <motion.footer
@@ -14,11 +16,11 @@ const Footer: React.FC = () => {
       className="w-full bg-black/60 backdrop-blur-sm"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-6 py-6 text-[0.6rem] uppercase tracking-[0.25em] text-white/40 sm:flex-row sm:items-center sm:justify-between">
-        <span>© {year} mickeyshide</span>
-        <span className="text-white/30">Updated: 07.10.2025</span>
+        <span>&copy; {currentYear} mickeyshide</span>
+        <span className="text-white/30">Updated: {LAST_UPDATE}</span>
       </div>
     </motion.footer>
   );
 };
 
-export default Footer;
+export const SiteFooter = memo(SiteFooterComponent);

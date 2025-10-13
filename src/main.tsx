@@ -1,20 +1,26 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-// фикс высоты на iOS Safari
-const setViewportHeight = () => {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
-};
+import { App } from "@/app";
+import "@/app/styles/global.css";
+import { initializeViewportHeight } from "@/shared/lib/viewport";
 
-setViewportHeight();
-window.addEventListener("resize", setViewportHeight);
+const rootElement = document.getElementById("root");
 
+if (!rootElement) {
+  throw new Error("Failed to find the root element");
+}
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+const teardownViewport = initializeViewportHeight();
+
+createRoot(rootElement).render(
+  <StrictMode>
     <App />
-  </React.StrictMode>
+  </StrictMode>,
 );
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    teardownViewport();
+  });
+}

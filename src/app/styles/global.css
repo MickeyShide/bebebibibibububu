@@ -4,25 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* базовый маковский шрифт по умолчанию */
+/* Base typography and colors */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
-  background: black;
-  color: white;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue",
+    "Segoe UI", Roboto, sans-serif;
+  background-color: #000;
+  color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* пиксельный шрифт */
 .pixel-font {
-  font-family: 'VT323', monospace !important;
+  font-family: "VT323", monospace !important;
   letter-spacing: 0.03em;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: none;
 }
 
-/* ✅ нормальный, стабильный скролл */
 html,
 body {
   min-height: 100%;
@@ -34,7 +33,11 @@ body {
   scroll-behavior: smooth;
 }
 
-/* анимации */
+.fade-to-black {
+  transition: background-color 0.6s ease-in-out;
+  background-color: #000;
+}
+
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
@@ -43,6 +46,7 @@ body {
     transform: rotate(360deg);
   }
 }
+
 .animate-spin-slow {
   animation: spin-slow 60s linear infinite;
 }
@@ -58,17 +62,15 @@ body {
     opacity: 1;
   }
 }
+
 .animate-pulse-bright {
   animation: pulse-bright 3s ease-in-out infinite;
 }
 
-
-/* ✅ динамическая высота для Safari */
 :root {
   --vh: 100%;
 }
 
-/* при загрузке и ресайзе пересчитываем vh */
 @supports (-webkit-touch-callout: none) {
   body {
     height: calc(var(--vh, 1vh) * 100);
